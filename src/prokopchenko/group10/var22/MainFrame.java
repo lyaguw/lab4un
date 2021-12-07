@@ -1,5 +1,6 @@
 package prokopchenko.group10.var22;
 
+
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -168,3 +169,4 @@ public class MainFrame extends JFrame {
         }
     }
 }
+

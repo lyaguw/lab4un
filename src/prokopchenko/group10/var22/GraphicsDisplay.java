@@ -1,5 +1,6 @@
 package prokopchenko.group10.var22;
 
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -61,7 +62,7 @@ public class GraphicsDisplay extends JPanel {
 
         graphicsStroke = new BasicStroke(2.0f, BasicStroke.CAP_BUTT,
 
-                BasicStroke.JOIN_ROUND, 10.0f, new float[] {10, 10, 10, 10, 10, 10, 30 , 30, 30,30,30,30}, 0.0f);///// везде 10
+                BasicStroke.JOIN_ROUND, 10.0f, new float[] {10, 10, 10, 10, 10, 10, 10 , 10, 10,10,10,10}, 0.0f);
 // Перо для рисования осей координат
 
         axisStroke = new BasicStroke(2.0f, BasicStroke.CAP_BUTT,
@@ -129,6 +130,7 @@ public class GraphicsDisplay extends JPanel {
                 maxY = graphicsData[i][1];
             }
         }
+
 /* Шаг 4 - Определить (исходя из размеров окна) масштабы по осям X
 и Y - сколько пикселов
 * приходится на единицу длины по X и по Y
@@ -158,7 +160,7 @@ minY
             }
             if (scale == scaleY) {
 // Если за основу был взят масштаб по оси Y, действовать по аналогии
-                double xIncrement = (getSize().getWidth() / scale - (maxX - minX)) / 2;
+                double xIncrement = (getSize().getWidth() / scale - (maxX - minX)) / 2;// тут дописать /4 и дописать if
                 maxX += xIncrement;
                 minX -= xIncrement;
             }
@@ -176,6 +178,7 @@ minY
                 maxY += yIncrement;
                 minY -= yIncrement;
             }
+
         }
 // Шаг 7 - Сохранить текущие настройки холста
         Graphics2D canvas = (Graphics2D) g;
@@ -347,14 +350,14 @@ minY
 // Шаг 1 - Установить специальное перо для черчения контуров маркеров
         canvas.setStroke(markerStroke);
 // Выбрать красный цвета для контуров маркеров
-        canvas.setColor(Color.BLUE); ////RED
+        canvas.setColor(Color.BLUE);
 // Выбрать красный цвет для закрашивания маркеров внутри
         canvas.setPaint(Color.BLUE);
 // Шаг 2 - Организовать цикл по всем точкам графика
         for (Double[] point : graphicsData) {
 // Инициализировать эллипс как объект для представления маркера
             int size = 5;
-            Ellipse2D.Double marker = new Ellipse2D.Double(); ///
+            Ellipse2D.Double marker = new Ellipse2D.Double();
             Point2D.Double center = xyToPoint(point[0], point[1]);
             //line.setLine();
 // Угол прямоугольника - отстоит на расстоянии (3,3)
@@ -419,8 +422,8 @@ minY
 // а правая (maxX) >= 0.0
 // Сама ось - это линия между точками (0, maxY) и (0, minY)
             canvas.draw(new Line2D.Double(xyToPoint(0, maxY),
-
                     xyToPoint(0, minY)));
+
 
 // Стрелка оси Y
             GeneralPath arrow = new GeneralPath();
@@ -448,15 +451,34 @@ minY
 // Определить, сколько места понадобится для надписи "y"
             Rectangle2D bounds = axisFont.getStringBounds("y", context);
             Point2D.Double labelPos = xyToPoint(0, maxY);
+
 // Вывести надпись в точке с вычисленными координатами
             canvas.drawString("y", (float)labelPos.getX() + 10,
-
                     (float)(labelPos.getY() - bounds.getY()));
-
-            Rectangle2D centerBounds = axisFont.getStringBounds("0", context);///////////////////////////////////////
+            Rectangle2D centerBounds = axisFont.getStringBounds("0", context);
             Point2D.Double centerLabelPos = xyToPoint(0, 0);
+            Rectangle2D centerBounds13 = axisFont.getStringBounds("0", context);
+            Point2D.Double centerLabelPos12 = xyToPoint(0, 1);
+            Rectangle2D centerBounds12 = axisFont.getStringBounds("0", context);
+            Point2D.Double centerLabelPos13 = xyToPoint(1, 0);
+
             canvas.drawString("0", (float)centerLabelPos.getX() + 10,
-                    (float)(centerLabelPos.getY() - centerBounds.getY()));
+                    (float)(centerLabelPos.getX() - centerBounds.getX()-50));
+
+            canvas.drawString("|", (float)centerLabelPos13.getX() + 35 ,////
+                    (float)(centerLabelPos13.getY() + 5));
+
+
+            canvas.drawString("_", (float)centerLabelPos12.getX() - 10 ,////
+                    (float)(centerLabelPos12.getY() - 45 ));
+            canvas.drawString("1", (float)centerLabelPos13.getX() + 35 ,////
+                    (float)(centerLabelPos13.getY() + 5));
+
+
+            canvas.drawString("1", (float)centerLabelPos12.getX() - 10 ,////
+                    (float)(centerLabelPos12.getY() - 45 ));
+
+
 
         }
 // Определить, должна ли быть видна ось X на графике
@@ -494,9 +516,11 @@ minY
 // Определить, сколько места понадобится для надписи "x"
             Rectangle2D bounds = axisFont.getStringBounds("x", context);
             Point2D.Double labelPos = xyToPoint(maxX, 0);
+
 // Вывести надпись в точке с вычисленными координатами
-            canvas.drawString("x", (float)(labelPos.getX() -
-                    bounds.getWidth() - 10), (float)(labelPos.getY() + bounds.getY()));
+            canvas.drawString("x", (float)(labelPos.getX() - bounds.getWidth() - 10),
+                    (float)(labelPos.getY() + bounds.getY()));
+
 
         }
     }
@@ -527,3 +551,4 @@ minY
         repaint();
     }
 }
+
